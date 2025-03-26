@@ -105,30 +105,69 @@ public class Archivo {
         return xml;
     }
 
-    public Archivo escribirJSON(String r) {
-        Archivo json = null;
+    public void escribirJSON(String r) throws IOException {
+        if (archivo.isEmpty()) {
+            return;
+        }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(r))) {
+            bw.write("[");
+            bw.write("\n");
+            int totalItems = archivo.size();
+            int contador = 0;
+            for (LinkedHashMap<String, String> mapa : archivo) {
+                bw.write("  {");
+                bw.write("\n");
 
-        return json;
+                StringBuilder lineacon = new StringBuilder();
+                for (String clave : mapa.keySet()) {
+                    lineacon.append("    ");
+                    lineacon.append("\"").append(Character.toUpperCase(clave.charAt(0))).append(clave.substring(1)).append("\": ");
+                    try {
+                        Double.parseDouble(mapa.get(clave));
+                        lineacon.append(mapa.get(clave)).append(",\n");
+                    } catch (NumberFormatException e) {
+                        lineacon.append("\"").append(Character.toUpperCase(mapa.get(clave).charAt(0)) + mapa.get(clave).substring(1)).append("\",\n");
+                    }
+
+                }
+                if (lineacon.length() > 0) {
+                    lineacon.setLength(lineacon.length() - 2);
+                }
+                bw.write(lineacon.toString());
+                bw.write("\n");
+                if (contador < totalItems - 1) {
+                    bw.write("  },");
+                    bw.write("\n");
+                } else {
+                    bw.write("  }");
+                    bw.write("\n");
+                }
+                contador++;
+            }
+            bw.write("]");
+            bw.write("\n");
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     public void escribirCSV(String r) throws IOException {
-
+        if (archivo.isEmpty()) {
+            return;
+        }
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(r))) {
+            StringBuilder encabezados = new StringBuilder();
+            LinkedHashMap<String, String> primerMapa = archivo.get(0);
 
-            StringBuilder linea = new StringBuilder();
-
-            for (LinkedHashMap<String, String> mapa : archivo) {
-                for (String clave : mapa.keySet()) {
-                    String aniadir = Character.toUpperCase(clave.charAt(0)) + clave.substring(1);
-                    linea.append(aniadir).append(",");
-                }
+            for (String clave : primerMapa.keySet()) {
+                encabezados.append(Character.toUpperCase(clave.charAt(0))).append(clave.substring(1)).append(",");
             }
 
-            if (linea.length() > 0) {
-                linea.setLength(linea.length() - 1);
+            if (encabezados.length() > 0) {
+                encabezados.setLength(encabezados.length() - 1);
             }
 
-            bw.write(linea.toString());
+            bw.write(encabezados.toString());
             bw.write("\n");
 
             for (LinkedHashMap<String, String> mapa : archivo) {
