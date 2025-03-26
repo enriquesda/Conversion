@@ -161,7 +161,7 @@ public class Archivo {
             String nombre = obtenerNombre();
             bw.write("<" + nombre + ">\n");
             for (LinkedHashMap<String, String> fila : archivo) {
-                bw.write("  <" + (nombre.length() - 1) + ">\n");
+                bw.write("  <" + (nombre.substring(0, nombre.length() - 1)) + ">\n");
                 for (String key : fila.keySet()) {
                     bw.write("\t<" + key + ">" + fila.get(key) + "</" + key + ">\n");
                 }
