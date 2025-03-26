@@ -19,18 +19,19 @@ public class Archivo {
         switch (aux[aux.length - 1]) {
             case "csv":
                 formato = 0;
+                this.archivo = lecturaCSV(ruta);
                 break;
             case "json":
                 formato = 1;
+                this.archivo = lecturaJSON(ruta);
                 break;
             case "xml":
                 formato = 2;
+                this.archivo = lecturaXML(ruta);
                 break;
             default:
-
                 break;
         }
-        this.archivo = lecturaXML(ruta);
     }
 
     public String getRuta() {
