@@ -1,68 +1,107 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class Archivo {
     private String ruta;
-    private ArrayList<HashMap<String, String>> archivo;
+    private ArrayList<LinkedHashMap<String, String>> archivo;
     private int formato; // 0->csv 1->json 2->xml
 
     public Archivo(String ruta) {
         this.ruta = ruta;
-        String[] aux = ruta.split(".");
-        switch (aux[aux.length - 1]) {
-            case "csv":
-                formato = 0;
-                break;
-            case "json":
-                formato = 1;
-                break;
-            case "xml":
-                formato = 2;
-                break;
-            default:
+    }
 
-                break;
+    public ArrayList<LinkedHashMap<String, String>> leerArchivoCSV(String ruta) {
+        ArrayList<LinkedHashMap<String, String>> archivo = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
+            String linea;
+            String[] cabecera = br.readLine().split(",");
+            while ((linea = br.readLine()) != null) {
+                String[] valor = linea.split(",");
+                LinkedHashMap<String, String> fila = new LinkedHashMap<>();
+                for (int i = 0; i < cabecera.length; i++) {
+                    fila.put(cabecera[i], valor[i]);
+                }
+                archivo.add(fila);
+            }
+
+        } catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
         }
+        return archivo;
     }
 
-    public ArrayList<HashMap<String, String>> lecturaXML(String r){
-        ArrayList<HashMap<String, String>> lista = new ArrayList<>();
-
-
-        return lista;
+    public ArrayList<LinkedHashMap<String, String>> leerArchivoJSON(String ruta) {
+        ArrayList<LinkedHashMap<String, String>> archivo = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
+            String linea;
+            LinkedHashMap<String, String> fila = null; 
+            while ((linea = br.readLine()) != null && !linea.equals("]")) {
+                linea = linea.trim();
+                if (linea.equals("{")) {
+                    fila = new LinkedHashMap<>(); 
+                } else if (linea.equals("},") || linea.equals("}")) {
+                    if (fila != null) {
+                        archivo.add(fila); 
+                    }
+                } else {
+                    String[] valor = linea.split(":");
+                    for (int i = 0; i < valor.length; i += 2) {
+                        if (fila != null) {
+                            String key = valor[i].trim();
+                            if (key.length() > 2) { // Verifica que la longitud sea suficiente para que no de error
+                                key = key.substring(1, key.length() - 1); 
+                            } 
+                            String dato = valor[valor.length - 1].trim();
+                            if (dato.contains("\"")) { // Si contiene comillas
+                                if (dato.endsWith("\",")) { // Si termina en ",
+                                    dato = dato.substring(1, dato.length() - 2); 
+                                } else { // Si no termina en ",
+                                    dato = dato.substring(1, dato.length() - 1); 
+                                }
+                            } else { // Si no contiene comillas
+                                if (dato.endsWith(",")) {
+                                    dato = dato.substring(0, dato.length() - 1); 
+                                } else {
+                                    dato = dato.substring(0, dato.length());
+                                }
+                            }
+                            fila.put(key, dato);
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+        return archivo;
     }
 
-    public ArrayList<HashMap<String, String>> lecturaJSON(String r){
-        ArrayList<HashMap<String, String>> lista = new ArrayList<>();
+    public void escribirXML(String rutadest) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutadest))) {
+            String nombre = obtenerNombre();
+            bw.write("<" + nombre + ">\n");
+            for (LinkedHashMap<String, String> fila : archivo) {
+                bw.write("  <" + (nombre.length()-1) + ">\n");
+                for (String key : fila.keySet()) {
+                    bw.write("\t<" + key + ">" + fila.get(key) + "</" + key + ">\n");
+                }
+                bw.write("  </" + (nombre.substring(0, nombre.length()-1)) + ">\n");
+            }
+            bw.write("</"+ nombre + ">\n");
+        } catch (IOException e) {
+            System.err.println("Error al escribir " + e.getMessage());
+        }
 
-
-        return lista;
     }
 
-    public ArrayList<HashMap<String, String>> lecturaCSV(String r){
-        ArrayList<HashMap<String, String>> lista = new ArrayList<>();
-
-
-        return lista;
-    }
-
-
-    public Archivo escribirXML(){
-        Archivo xml=null;
-
-        return xml;
-    }
-
-    public Archivo escribirJSON(){
-        Archivo json=null;
-
-        return json;
-    }
-
-    public Archivo escribirCSV(){
-        Archivo csv=null;
-
-        return csv;
+    private String obtenerNombre(){
+        String[] partes = ruta.split("/");
+        return partes[partes.length-1].substring(0, partes[partes.length-1].length()-4);
     }
 
 }
