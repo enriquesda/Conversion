@@ -70,8 +70,13 @@ public class Menu {
      * Comprueba si la ruta del fichero es correcta(pertenece al directorio que estamos) y lo guarda como archivo selec
      * @param r
      */
-    public void selecFichero(String r){
-
+    public boolean selecFichero(String r){
+        File com = new File(r);
+        if(archivos.contains(com)){
+            this.selec= new Archivo(com.getAbsolutePath());
+            return true;
+        }
+        return false;
     }
 
 
@@ -98,6 +103,8 @@ public class Menu {
         StringBuilder dev= new StringBuilder();
         for (File file : archivos) {
             dev.append(file.getName()).append("\n");
+            dev.append(file.getPath()).append("\n");
+
         }
         return dev.toString();
     }
