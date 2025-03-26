@@ -112,7 +112,7 @@ public class Archivo {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(r))) {
             bw.write("[");
             bw.write("\n");
-            int totalItems = archivo.size();
+            int longitud = archivo.size();
             int contador = 0;
             for (LinkedHashMap<String, String> mapa : archivo) {
                 bw.write("  {");
@@ -128,14 +128,13 @@ public class Archivo {
                     } catch (NumberFormatException e) {
                         lineacon.append("\"").append(Character.toUpperCase(mapa.get(clave).charAt(0)) + mapa.get(clave).substring(1)).append("\",\n");
                     }
-
                 }
                 if (lineacon.length() > 0) {
                     lineacon.setLength(lineacon.length() - 2);
                 }
                 bw.write(lineacon.toString());
                 bw.write("\n");
-                if (contador < totalItems - 1) {
+                if (contador < longitud - 1) {
                     bw.write("  },");
                     bw.write("\n");
                 } else {
