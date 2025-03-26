@@ -15,5 +15,6 @@ public class App {
         archivo.escribirXML(path2);
         System.out.println("\n");
         
+        
     }
 }
