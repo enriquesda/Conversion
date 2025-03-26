@@ -1,5 +1,7 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -18,7 +20,6 @@ public class Archivo {
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
             String linea;
             String[] cabecera = br.readLine().split(",");
-            // Lee el archivo línea por línea
             while ((linea = br.readLine()) != null) {
                 String[] valor = linea.split(",");
                 LinkedHashMap<String, String> fila = new LinkedHashMap<>();
@@ -52,8 +53,6 @@ public class Archivo {
                     for (int i = 0; i < valor.length; i += 2) {
                         if (fila != null) {
                             String key = valor[i].trim();
-                            System.out.println(key);
-                            System.out.println(key.length());
                             if (key.length() > 2) { // Verifica que la longitud sea suficiente para que no de error
                                 key = key.substring(1, key.length() - 1); 
                             } 
@@ -80,6 +79,23 @@ public class Archivo {
             System.err.println("Error: " + e.getMessage());
         }
         return archivo;
+    }
+
+    public void escribirXML(String ruta, ArrayList<LinkedHashMap<String, String>> archivo) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ruta))) {
+            bw.write("<coches>\n");
+            for (LinkedHashMap<String, String> fila : archivo) {
+                bw.write("  <coche>\n");
+                for (String key : fila.keySet()) {
+                    bw.write("\t<" + key + ">" + fila.get(key) + "</" + key + ">\n");
+                }
+                bw.write("  </coche>\n");
+            }
+            bw.write("</coches>\n");
+        } catch (IOException e) {
+            System.err.println("Error al escribir " + e.getMessage());
+        }
+        
     }
 
 }
