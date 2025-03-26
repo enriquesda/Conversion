@@ -81,21 +81,27 @@ public class Archivo {
         return archivo;
     }
 
-    public void escribirXML(String ruta, ArrayList<LinkedHashMap<String, String>> archivo) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ruta))) {
-            bw.write("<coches>\n");
+    public void escribirXML(String rutadest) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutadest))) {
+            String nombre = obtenerNombre();
+            bw.write("<" + nombre + ">\n");
             for (LinkedHashMap<String, String> fila : archivo) {
-                bw.write("  <coche>\n");
+                bw.write("  <" + (nombre.length()-1) + ">\n");
                 for (String key : fila.keySet()) {
                     bw.write("\t<" + key + ">" + fila.get(key) + "</" + key + ">\n");
                 }
-                bw.write("  </coche>\n");
+                bw.write("  </" + (nombre.substring(0, nombre.length()-1)) + ">\n");
             }
-            bw.write("</coches>\n");
+            bw.write("</"+ nombre + ">\n");
         } catch (IOException e) {
             System.err.println("Error al escribir " + e.getMessage());
         }
-        
+
+    }
+
+    private String obtenerNombre(){
+        String[] partes = ruta.split("/");
+        return partes[partes.length-1].substring(0, partes[partes.length-1].length()-4);
     }
 
 }
