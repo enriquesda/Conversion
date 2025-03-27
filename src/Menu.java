@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.io.File;
 import java.util.Scanner;
@@ -6,17 +8,80 @@ import java.io.IOException;
 public class Menu {
 
     private String ruta;
+<<<<<<< HEAD
     private ArrayList<File> archivos;
     private Archivo selec;
 
+=======
+    private ArrayList <File> archivos;
+    private Archivo selec;
+
+    public Menu(){
+        this.ruta="......";
+        this.archivos= new ArrayList<>();
+        this.selec=null;
+    }
+    
+
+    public String getRuta() {
+        return ruta;
+    }
+
+
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
+    }
+
+
+    public ArrayList<File> getArchivos() {
+        return archivos;
+    }
+
+
+    public void setArchivos(ArrayList<File> archivos) {
+        this.archivos = archivos;
+    }
+
+
+    public Archivo getSelec() {
+        return selec;
+    }
+
+
+    public void setSelec(Archivo selec) {
+        this.selec = selec;
+    }
+
+
+>>>>>>> Enrique
     /**
      * comprueba si la ruta selecioda existe y si es asi la establece y guarda los
      * archivos que tiene
      * 
      * @param r
      */
+<<<<<<< HEAD
     public void selecRuta(String r) {
 
+=======
+    public boolean selecRuta(String r) {
+        File directorio = new File(r);
+        if (directorio.exists() && directorio.isDirectory()) {
+            this.ruta = directorio.getAbsolutePath(); 
+            this.archivos.clear();
+            
+            File[] contenido = directorio.listFiles();
+            if (contenido != null) {
+                for (File archivo : contenido) {
+                    if (archivo.isFile()) {
+                        archivos.add(archivo);
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+>>>>>>> Enrique
     }
 
     /**
@@ -25,8 +90,23 @@ public class Menu {
      * 
      * @param r
      */
+<<<<<<< HEAD
     public void selecFichero(String r) {
 
+=======
+    public boolean selecFichero(String r) {
+        if (archivos == null || archivos.isEmpty()) {
+            return false;
+        }
+    
+        for (File file : archivos) {
+            if (file.getName().equals(r)) {
+                this.selec = new Archivo(file.getAbsolutePath());
+                return true;
+            }
+        }
+        return false; 
+>>>>>>> Enrique
     }
 
     /**
@@ -34,6 +114,11 @@ public class Menu {
      * @param formato
      * @param ruta
      */
+<<<<<<< HEAD
+=======
+
+    public void conversion(String formato,String nombre){
+>>>>>>> Enrique
 
     public void conversion(String formato, String nombre) {
         if (selec != null) {
@@ -69,4 +154,19 @@ public class Menu {
         return " ";
     }
 
+<<<<<<< HEAD
+=======
+    public String imprimirArchivos(){
+        StringBuilder dev= new StringBuilder();
+        for (File file : archivos) {
+            dev.append(file.getName()).append("\n");
+            dev.append(file.getPath()).append("\n");
+
+        }
+        return dev.toString();
+    }
+
+
+    
+>>>>>>> Enrique
 }

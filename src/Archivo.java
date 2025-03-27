@@ -13,6 +13,7 @@ public class Archivo {
     private ArrayList<LinkedHashMap<String, String>> archivo;
     private int formato; // 0->csv 1->json 2->xml
 
+    
     public Archivo(String ruta) {
         this.ruta = ruta;
         String[] aux = ruta.split("\\.");
