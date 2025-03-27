@@ -49,7 +49,7 @@ public class Menu {
                     selec.escribirCSV(copia.getPath());
                 }
             } catch (IOException e) {
-                System.err.println("Error during conversion: " + e.getMessage());
+                System.err.println("Error durante la conversión: " + e.getMessage());
             }
         }
     }
