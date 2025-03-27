@@ -35,7 +35,7 @@ public class Menu {
      * @param ruta
      */
 
-    public void conversion(String formato, String nombre) {
+    public void conversion(String formato, String nombre) { //CORREGIR, NO ME MOLA NADA
         if (selec != null) {
             try {
                 if (formato.equals("xml")) {
