@@ -8,7 +8,7 @@ public class Menu {
     private Archivo selec;
 
     public Menu(){
-        this.ruta="......";
+        this.ruta=".........";
         this.archivos= new ArrayList<>();
         this.selec=null;
     }
