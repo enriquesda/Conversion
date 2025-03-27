@@ -48,21 +48,23 @@ public class Menu {
      * comprueba si la ruta selecioda existe y si es asi la establece y guarda los archivos que tiene
      * @param r
      */
-    public boolean selecRuta(String r){
-        File fichero = new File(r);
-        if (fichero.exists() && fichero.isDirectory()) {
-            this.ruta=r;
-            String[] contenido = fichero.list();
-            if (archivos != null && contenido.length > 0) {
-            for (String archivo : contenido) {
-                        File archi = new File(archivo);
-                        archivos.add(archi);
+    public boolean selecRuta(String r) {
+        File directorio = new File(r);
+        if (directorio.exists() && directorio.isDirectory()) {
+            this.ruta = directorio.getAbsolutePath(); 
+            this.archivos.clear();
+            
+            File[] contenido = directorio.listFiles();
+            if (contenido != null) {
+                for (File archivo : contenido) {
+                    if (archivo.isFile()) {
+                        archivos.add(archivo);
                     }
                 }
+            }
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
 
@@ -70,13 +72,18 @@ public class Menu {
      * Comprueba si la ruta del fichero es correcta(pertenece al directorio que estamos) y lo guarda como archivo selec
      * @param r
      */
-    public boolean selecFichero(String r){
-        File com = new File(r);
-        if(archivos.contains(com)){
-            this.selec= new Archivo(com.getAbsolutePath());
-            return true;
+    public boolean selecFichero(String r) {
+        if (archivos == null || archivos.isEmpty()) {
+            return false;
         }
-        return false;
+    
+        for (File file : archivos) {
+            if (file.getName().equals(r)) {
+                this.selec = new Archivo(file.getAbsolutePath());
+                return true;
+            }
+        }
+        return false; 
     }
 
 

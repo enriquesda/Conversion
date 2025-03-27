@@ -10,6 +10,10 @@ public class App {
             System.out.println("Ruta valida");
             System.out.println(menu.getRuta());
             System.out.println(menu.imprimirArchivos());
+            if(menu.selecFichero("coches.xml")){
+                Archivo a = menu.getSelec();
+                a.imprimirContenido();
+            }
             
         }else{
             System.out.println("Ruta no valida");
