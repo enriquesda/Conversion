@@ -99,8 +99,7 @@ public class Menu {
      * @param ruta
      */
 
-
-    public void conversion(String formato, String nombre) {
+    public void conversion(String formato, String nombre) { //CORREGIR, NO ME MOLA NADA
         if (selec != null) {
             try {
                 if (formato.equals("xml")) {
@@ -114,7 +113,7 @@ public class Menu {
                     selec.escribirCSV(copia.getPath());
                 }
             } catch (IOException e) {
-                System.err.println("Error during conversion: " + e.getMessage());
+                System.err.println("Error durante la conversión: " + e.getMessage());
             }
         }
     }
