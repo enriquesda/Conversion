@@ -100,16 +100,16 @@ public class Menu {
      */
 
     public void conversion(String formato, String nombre) { //CORREGIR, NO ME MOLA NADA
-        if (selec != null) {
+        if (this.selec != null) {
             try {
                 if (formato.equals("xml")) {
-                    File copia = new File(selec.getRuta() + "/" + nombre + ".xml");
+                    File copia = new File(this.selec.getRuta() + "/" + nombre + ".xml");
                     selec.escribirXML(copia.getPath());
                 } else if (formato.equals("json")) {
-                    File copia = new File(selec.getRuta() + "/" + nombre + ".json");
+                    File copia = new File(this.selec.getRuta() + "/" + nombre + ".json");
                     selec.escribirJSON(copia.getPath());
                 } else if (formato.equals("csv")) {
-                    File copia = new File(selec.getRuta() + "/" + nombre + ".csv");
+                    File copia = new File(this.selec.getRuta() + "/" + nombre + ".csv");
                     selec.escribirCSV(copia.getPath());
                 }
             } catch (IOException e) {
