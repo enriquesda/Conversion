@@ -8,11 +8,6 @@ import java.io.IOException;
 public class Menu {
 
     private String ruta;
-<<<<<<< HEAD
-    private ArrayList<File> archivos;
-    private Archivo selec;
-
-=======
     private ArrayList <File> archivos;
     private Archivo selec;
 
@@ -53,17 +48,12 @@ public class Menu {
     }
 
 
->>>>>>> Enrique
     /**
      * comprueba si la ruta selecioda existe y si es asi la establece y guarda los
      * archivos que tiene
      * 
      * @param r
      */
-<<<<<<< HEAD
-    public void selecRuta(String r) {
-
-=======
     public boolean selecRuta(String r) {
         File directorio = new File(r);
         if (directorio.exists() && directorio.isDirectory()) {
@@ -81,7 +71,6 @@ public class Menu {
             return true;
         }
         return false;
->>>>>>> Enrique
     }
 
     /**
@@ -90,10 +79,6 @@ public class Menu {
      * 
      * @param r
      */
-<<<<<<< HEAD
-    public void selecFichero(String r) {
-
-=======
     public boolean selecFichero(String r) {
         if (archivos == null || archivos.isEmpty()) {
             return false;
@@ -106,7 +91,6 @@ public class Menu {
             }
         }
         return false; 
->>>>>>> Enrique
     }
 
     /**
@@ -114,11 +98,7 @@ public class Menu {
      * @param formato
      * @param ruta
      */
-<<<<<<< HEAD
-=======
 
-    public void conversion(String formato,String nombre){
->>>>>>> Enrique
 
     public void conversion(String formato, String nombre) {
         if (selec != null) {
@@ -154,8 +134,6 @@ public class Menu {
         return " ";
     }
 
-<<<<<<< HEAD
-=======
     public String imprimirArchivos(){
         StringBuilder dev= new StringBuilder();
         for (File file : archivos) {
@@ -168,5 +146,4 @@ public class Menu {
 
 
     
->>>>>>> Enrique
 }
