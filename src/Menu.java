@@ -118,6 +118,7 @@ public class Menu {
         }
     }
 
+    //REPE¿?¿?¿ SEGURAMENTE BORRARS
     public boolean comprobarRuta(String r) {
         File ruta = new File(r);
         if(ruta.exists()){
@@ -137,7 +138,7 @@ public class Menu {
         StringBuilder dev= new StringBuilder();
         for (File file : archivos) {
             dev.append(file.getName()).append("\n");
-            dev.append(file.getPath()).append("\n");
+            
 
         }
         return dev.toString();
