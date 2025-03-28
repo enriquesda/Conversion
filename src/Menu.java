@@ -89,17 +89,17 @@ public class Menu {
      * @param formato
      * @param ruta
      */
-    public void conversion(String formato, String nombre) { //CORREGIR, NO ME MOLA NADA
+    public void conversion(int formato, String nombre) { //CORREGIR, NO ME MOLA NADA
         if (this.selec != null) {
             try {
-                if (formato.equals("xml")) {
-                    File copia = new File(this.selec.getRuta() + "/" + nombre + ".xml");
+                if (formato==2) {
+                    File copia = new File(this.ruta + "/" + nombre + ".xml");
                     selec.escribirXML(copia.getPath());
-                } else if (formato.equals("json")) {
-                    File copia = new File(this.selec.getRuta() + "/" + nombre + ".json");
+                } else if (formato==1) {
+                    File copia = new File(this.ruta+ "/" + nombre + ".json");
                     selec.escribirJSON(copia.getPath());
-                } else if (formato.equals("csv")) {
-                    File copia = new File(this.selec.getRuta() + "/" + nombre + ".csv");
+                } else if (formato==0) {
+                    File copia = new File(this.ruta + "/" + nombre + ".csv");
                     selec.escribirCSV(copia.getPath());
                 }
             } catch (IOException e) {
