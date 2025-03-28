@@ -43,20 +43,6 @@ public class App {
         } while (funcionando);
         sc.close();
 
-        String path = "Conversion/src/archivos";
-        if (menu.selecRuta(path)) {
-            System.out.println("Ruta valida");
-            System.out.println(menu.getRuta());
-            System.out.println(menu.imprimirArchivos());
-            if (menu.selecFichero("coches.xml")) {
-                Archivo a = menu.getSelec();
-                a.imprimirContenido();
-            }
-
-        } else {
-            System.out.println("Ruta no valida");
-        }
-
     }
 
     public static void ejercicio1() throws InterruptedException {
@@ -205,22 +191,46 @@ public class App {
             int numero = Integer.parseInt(sc.nextLine());
             switch (numero) {
                 case 1:
+                System.out.println("Introduce un nombre para el nuevo archivo JSON: ");
+                String nombre = sc.nextLine().trim();
+                if(menu.getSelec().getFormato()==1){
+                    System.out.println("El archivo ya es un JSON.");
+                }
+                else{
                     System.out.println("Convirtiendo a JSON...");
-                    // Aquí deberías implementar la lógica para convertir a JSON
+                    menu.conversion(1, nombre);
+                    System.out.println("Archivo convertido a JSON con éxito.");
+                }
                     break;
                 case 2:
+                System.out.println("Introduce un nombre para el nuevo archivo XML: ");
+                String nombre1 = sc.nextLine().trim();
+                if(menu.getSelec().getFormato()==2){
+                    System.out.println("El archivo ya es un XML.");
+                }
+                else{
                     System.out.println("Convirtiendo a XML...");
-                    // Aquí deberías implementar la lógica para convertir a XML
+                    menu.conversion(2, nombre1);
+                    System.out.println("Archivo convertido a XML con éxito.");
+                }
                     break;
                 case 3:
+                System.out.println("Introduce un nombre para el nuevo archivo CSV: ");
+                String nombre2 = sc.nextLine().trim();
+                if(menu.getSelec().getFormato()==0){
+                    System.out.println("El archivo ya es un CSV.");
+                }
+                else{
                     System.out.println("Convirtiendo a CSV...");
-                    // Aquí deberías implementar la lógica para convertir a CSV
+                    menu.conversion(0, nombre2);
+                    System.out.println("Archivo convertido a CSV con éxito.");
+                }
                     break;
                 default:
                     funcionando = false;
                     System.out.println("Saliendo del menú de conversión...");
             }
         } while (funcionando);
-        sc.close();
+       
     }
 }
