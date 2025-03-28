@@ -1,4 +1,6 @@
-
+/**
+ * @author Alberto Vera y Enrique Ambrona
+ */
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -128,17 +130,17 @@ public class Archivo {
                     for (int i = 0; i < valor.length; i += 2) {
                         if (fila != null) {
                             String key = valor[i].trim();
-                            if (key.length() > 2) { // Verifica que la longitud sea suficiente para que no de error
+                            if (key.length() > 2) { 
                                 key = key.substring(1, key.length() - 1);
                             }
                             String dato = valor[valor.length - 1].trim();
-                            if (dato.contains("\"")) { // Si contiene comillas
-                                if (dato.endsWith("\",")) { // Si termina en ",
+                            if (dato.contains("\"")) { 
+                                if (dato.endsWith("\",")) { 
                                     dato = dato.substring(1, dato.length() - 2);
-                                } else { // Si no termina en ",
+                                } else { 
                                     dato = dato.substring(1, dato.length() - 1);
                                 }
-                            } else { // Si no contiene comillas
+                            } else { 
                                 if (dato.endsWith(",")) {
                                     dato = dato.substring(0, dato.length() - 1);
                                 } else {

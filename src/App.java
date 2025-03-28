@@ -1,3 +1,6 @@
+/**
+ * @author Alberto Vera y Enrique Ambrona
+ */
 
 import java.io.File;
 import java.io.IOException;
@@ -24,17 +27,21 @@ public class App {
             while (!entradaValida) {
                 try {
                     numero = Integer.parseInt(sc.nextLine());
-                    entradaValida = true;
+                    if(numero<0 || numero>3){
+                        System.out.print("¡Entrada inválida! Por favor, ingresa un número válido positivo: ");
+                    }else{
+                        entradaValida = true;
+                    }
                 } catch (NumberFormatException e) {
-                    System.out.print("¡Entrada inválida! Por favor, ingresa un número válido: ");
+                    System.out.print("¡Entrada inválida! Por favor, ingresa un número válido positivo: ");
                 }
             }
 
             switch (numero) {
                 case 1 ->
-                    seleccionarDir();
+                    seleccionarDIR();
                 case 2 ->
-                    lecturaArchivo();
+                    leerArchivo();
                 case 3 ->
                     convertirEn();
                 default ->
@@ -45,7 +52,7 @@ public class App {
 
     }
 
-    public static void seleccionarDir() throws InterruptedException {
+    public static void seleccionarDIR() throws InterruptedException {
         System.out.print("Introduce la ruta en la que quieres buscar: ");
         if (menu.selecRuta(sc.nextLine().trim())) {
             System.out.println("Ruta seleccionada con exito");
@@ -56,7 +63,7 @@ public class App {
         limpiarPantalla();
     }
 
-    public static void lecturaArchivo() throws InterruptedException {
+    public static void leerArchivo() throws InterruptedException {
         if (menu.getRuta().equals(" ")) {
             System.out.println("Primero selecciona una ruta.");
         } else {
@@ -179,8 +186,13 @@ public class App {
     }
 
     public static void convertirEn() throws IOException, InterruptedException {
-        limpiarPantalla();
-        if (menu.getSelec().getFormato() == 3) {
+        if(menu.getSelec()==null){
+            System.out.println("Selecciona primero un archivo");
+            Thread.sleep(2000);
+            limpiarPantalla();
+        }else{
+            limpiarPantalla();
+        if (menu.getSelec().getFormato() == 3 ) {
             System.out.println("Este fichero no se puede transformar");
             Thread.sleep(2000);
             limpiarPantalla();
@@ -216,13 +228,17 @@ public class App {
     
                 int numero = 0;
                 boolean entradaValida = false;
-    
+                System.out.print("Selecciona una opcion: ");
                 while (!entradaValida) {
                     try {
                         numero = Integer.parseInt(sc.nextLine());
-                        entradaValida = true;
+                        if(numero<0 || numero>3){
+                            System.out.print("¡Entrada inválida! Por favor, ingresa un número válido positivo: ");
+                        }else{
+                            entradaValida = true;
+                        }
                     } catch (NumberFormatException e) {
-                        System.out.print("¡Entrada inválida! Por favor, ingresa un número válido: ");
+                        System.out.print("¡Entrada inválida! Por favor, ingresa un número válido positivo: ");
                     }
                 }
                 
@@ -269,6 +285,8 @@ public class App {
                 limpiarPantalla();
             } while (funcionando);
         }
+        }
+        
     }
     
 }
