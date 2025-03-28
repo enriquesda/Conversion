@@ -119,20 +119,19 @@ public class App {
             "   ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═════╝ ╚═╝  ╚═╝"
         };
 
-        System.out.println("\n\n"); // Espaciado para centrar mejor
+        System.out.println("\n\n");
         for (String line : logo) {
             System.out.println(BOLD + BLUE + line + RESET);
-            Thread.sleep(300); // Retraso para animación
+            Thread.sleep(300);
         }
 
-        Thread.sleep(1000); // Pausa antes de borrar
-        limpiarPantalla(); // Limpiar pantalla
+        Thread.sleep(1000);
+        limpiarPantalla();
 
-        System.out.println("\n\n");  // Añadimos un par de saltos para espacio
+        System.out.println("\n\n");
     }
 
     public static void limpiarPantalla() {
-        // Secuencia para limpiar la pantalla (funciona en la mayoría de terminales)
         System.out.print("\u001B[H\u001B[2J");
         System.out.flush();
     }
