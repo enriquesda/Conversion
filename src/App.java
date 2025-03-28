@@ -178,69 +178,97 @@ public class App {
         return "║ " + texto + " ".repeat(Math.max(0, espacioExtra)) + " ║";
     }
 
-    public static void convertirEn() throws IOException {
-        boolean funcionando = true;
-        do {
-
-            System.out.println("A qué formato quieres convertir?");
-            System.out.println("1: Convertir a JSON");
-            System.out.println("2: Convertir a XML");
-            System.out.println("3: Convertir a CSV");
-            System.out.println("0: SALIR");
-            
-            int numero = 0;
-            boolean entradaValida = false;
-
-            while (!entradaValida) {
-                try {
-                    numero = Integer.parseInt(sc.nextLine());
-                    entradaValida = true;
-                } catch (NumberFormatException e) {
-                    System.out.print("¡Entrada inválida! Por favor, ingresa un número válido: ");
+    public static void convertirEn() throws IOException, InterruptedException {
+        limpiarPantalla();
+        if (menu.getSelec().getFormato() == 3) {
+            System.out.println("Este fichero no se puede transformar");
+            Thread.sleep(2000);
+            limpiarPantalla();
+        } else {
+            boolean funcionando = true;
+            do {
+                StringBuilder impresion = new StringBuilder();
+                int ancho = 60;
+    
+                String RESET = "\u001B[0m";
+                String BOLD = "\u001B[1m";
+                String BLUE = "\u001B[34m";
+                String GREEN = "\u001B[32m";
+                String CYAN = "\u001B[36m";
+                String YELLOW = "\u001B[33m";
+                String RED = "\u001B[31m";
+    
+                String border = BLUE + "╔" + "═".repeat(ancho - 2) + "╗" + RESET;
+                String separator = BLUE + "╠" + "═".repeat(ancho - 2) + "╣" + RESET;
+                String bottomBorder = BLUE + "╚" + "═".repeat(ancho - 2) + "╝" + RESET;
+    
+                impresion.append(border).append("\n");
+                impresion.append(BLUE).append(formatoLinea(BOLD + "MENÚ DE CONVERSIÓN" + RESET, ancho)).append("\n");
+                impresion.append(separator).append("\n");
+                impresion.append(BLUE).append(formatoLinea(RED + "Selecciona un formato de conversión" + RESET, ancho)).append("\n");
+                impresion.append(BLUE).append(formatoLinea("1: " + CYAN + "Convertir a JSON" + RESET, ancho)).append("\n");
+                impresion.append(BLUE).append(formatoLinea("2: " + CYAN + "Convertir a XML" + RESET, ancho)).append("\n");
+                impresion.append(BLUE).append(formatoLinea("3: " + CYAN + "Convertir a CSV" + RESET, ancho)).append("\n");
+                impresion.append(BLUE).append(formatoLinea("0: " + RED + "SALIR" + RESET, ancho)).append("\n");
+                impresion.append(bottomBorder).append("\n");
+    
+                System.out.println(impresion.toString());
+    
+                int numero = 0;
+                boolean entradaValida = false;
+    
+                while (!entradaValida) {
+                    try {
+                        numero = Integer.parseInt(sc.nextLine());
+                        entradaValida = true;
+                    } catch (NumberFormatException e) {
+                        System.out.print("¡Entrada inválida! Por favor, ingresa un número válido: ");
+                    }
                 }
-            }
-            switch (numero) {
-                case 1:
-                System.out.println("Introduce un nombre para el nuevo archivo JSON: ");
-                String nombre = sc.nextLine().trim();
-                if(menu.getSelec().getFormato()==1){
-                    System.out.println("El archivo ya es un JSON.");
+                
+                String nombre;
+                switch (numero) {
+                    case 1:
+                        System.out.println("Introduce un nombre para el nuevo archivo JSON: ");
+                        nombre = sc.nextLine().trim();
+                        if (menu.getSelec().getFormato() == 1) {
+                            System.out.println("El archivo ya es un JSON.");
+                        } else {
+                            System.out.println("Convirtiendo a JSON...");
+                            menu.conversion(1, nombre);
+                            System.out.println("Archivo convertido a JSON con éxito.");
+                        }
+                        break;
+                    case 2:
+                        System.out.println("Introduce un nombre para el nuevo archivo XML: ");
+                        nombre = sc.nextLine().trim();
+                        if (menu.getSelec().getFormato() == 2) {
+                            System.out.println("El archivo ya es un XML.");
+                        } else {
+                            System.out.println("Convirtiendo a XML...");
+                            menu.conversion(2, nombre);
+                            System.out.println("Archivo convertido a XML con éxito.");
+                        }
+                        break;
+                    case 3:
+                        System.out.println("Introduce un nombre para el nuevo archivo CSV: ");
+                        nombre = sc.nextLine().trim();
+                        if (menu.getSelec().getFormato() == 0) {
+                            System.out.println("El archivo ya es un CSV.");
+                        } else {
+                            System.out.println("Convirtiendo a CSV...");
+                            menu.conversion(0, nombre);
+                            System.out.println("Archivo convertido a CSV con éxito.");
+                        }
+                        break;
+                    default:
+                        funcionando = false;
+                        System.out.println("Saliendo del menú de conversión...");
                 }
-                else{
-                    System.out.println("Convirtiendo a JSON...");
-                    menu.conversion(1, nombre);
-                    System.out.println("Archivo convertido a JSON con éxito.");
-                }
-                    break;
-                case 2:
-                System.out.println("Introduce un nombre para el nuevo archivo XML: ");
-                String nombre1 = sc.nextLine().trim();
-                if(menu.getSelec().getFormato()==2){
-                    System.out.println("El archivo ya es un XML.");
-                }
-                else{
-                    System.out.println("Convirtiendo a XML...");
-                    menu.conversion(2, nombre1);
-                    System.out.println("Archivo convertido a XML con éxito.");
-                }
-                    break;
-                case 3:
-                System.out.println("Introduce un nombre para el nuevo archivo CSV: ");
-                String nombre2 = sc.nextLine().trim();
-                if(menu.getSelec().getFormato()==0){
-                    System.out.println("El archivo ya es un CSV.");
-                }
-                else{
-                    System.out.println("Convirtiendo a CSV...");
-                    menu.conversion(0, nombre2);
-                    System.out.println("Archivo convertido a CSV con éxito.");
-                }
-                    break;
-                default:
-                    funcionando = false;
-                    System.out.println("Saliendo del menú de conversión...");
-            }
-        } while (funcionando);
-       
+                Thread.sleep(2000);
+                limpiarPantalla();
+            } while (funcionando);
+        }
     }
+    
 }

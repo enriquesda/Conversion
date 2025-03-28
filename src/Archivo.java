@@ -11,7 +11,7 @@ public class Archivo {
 
     private String ruta;
     private ArrayList<LinkedHashMap<String, String>> archivo;
-    private int formato; // 0->csv 1->json 2->xml
+    private int formato; // 0->csv 1->json 2->xml 3->por defecto
 
     public Archivo(String ruta) {
         this.ruta = ruta;
@@ -30,7 +30,7 @@ public class Archivo {
                 this.archivo = leerArchivoXML(ruta);
                 break;
             default:
-
+                formato=3;
                 break;
         }
 
