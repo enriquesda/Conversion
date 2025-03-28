@@ -32,9 +32,9 @@ public class App {
 
             switch (numero) {
                 case 1 ->
-                    ejercicio1();
+                    seleccionarDir();
                 case 2 ->
-                    ejercicio2();
+                    lecturaArchivo();
                 case 3 ->
                     convertirEn();
                 default ->
@@ -45,7 +45,7 @@ public class App {
 
     }
 
-    public static void ejercicio1() throws InterruptedException {
+    public static void seleccionarDir() throws InterruptedException {
         System.out.print("Introduce la ruta en la que quieres buscar: ");
         if (menu.selecRuta(sc.nextLine().trim())) {
             System.out.println("Ruta seleccionada con exito");
@@ -56,7 +56,7 @@ public class App {
         limpiarPantalla();
     }
 
-    public static void ejercicio2() throws InterruptedException {
+    public static void lecturaArchivo() throws InterruptedException {
         if (menu.getRuta().equals(" ")) {
             System.out.println("Primero selecciona una ruta.");
         } else {
