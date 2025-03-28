@@ -43,20 +43,6 @@ public class App {
         } while (funcionando);
         sc.close();
 
-        String path = "Conversion/src/archivos";
-        if (menu.selecRuta(path)) {
-            System.out.println("Ruta valida");
-            System.out.println(menu.getRuta());
-            System.out.println(menu.imprimirArchivos());
-            if (menu.selecFichero("coches.xml")) {
-                Archivo a = menu.getSelec();
-                a.imprimirContenido();
-            }
-
-        } else {
-            System.out.println("Ruta no valida");
-        }
-
     }
 
     public static void ejercicio1() throws InterruptedException {
@@ -201,8 +187,18 @@ public class App {
             System.out.println("2: Convertir a XML");
             System.out.println("3: Convertir a CSV");
             System.out.println("0: SALIR");
+            
+            int numero = 0;
+            boolean entradaValida = false;
 
-            int numero = Integer.parseInt(sc.nextLine());
+            while (!entradaValida) {
+                try {
+                    numero = Integer.parseInt(sc.nextLine());
+                    entradaValida = true;
+                } catch (NumberFormatException e) {
+                    System.out.print("¡Entrada inválida! Por favor, ingresa un número válido: ");
+                }
+            }
             switch (numero) {
                 case 1:
                     System.out.println("Convirtiendo a JSON...");
